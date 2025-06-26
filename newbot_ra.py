@@ -122,6 +122,11 @@ if __name__ == '__main__':
     application.add_handler(CommandHandler("monitor", monitor))
     application.add_handler(CommandHandler("stop", stop))
     application.add_handler(CommandHandler("status", status))
-    
+    application = Application.builder().token(TOKEN).read_timeout(30).write_timeout(30).build()
+    application.run_polling(
+    allowed_updates=Update.ALL_TYPES,
+    close_loop=False,  # ← ¡Nuevo parámetro importante!
+    stop_signals=None  # Evita reinicios bruscos
+)
     print("🤖 Bot iniciado correctamente!")
     application.run_polling()
